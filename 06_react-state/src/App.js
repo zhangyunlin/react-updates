@@ -13,11 +13,11 @@ function App() {
     <div className="App">
       {/* <StateDemo /> */}
       {/* <StateUpdate /> */}
-      <ControlledForm />
+      {/* <ControlledForm />
 
       <MultiInputForm />
 
-      <FormDom />
+      <FormDom /> */}
 
     </div>
   );

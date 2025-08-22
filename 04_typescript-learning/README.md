@@ -264,6 +264,166 @@ interface Point{
 let p1:Point = {10, 20}
 修改x,y值的时候报错。
 
+#### 5.3 额外的属性检查
+
+```ts
+interface SquareConfig{
+    color?:string;
+    width?:number;
+    //额外参数
+    [propName:string]:any;
+}
+
+function createSquare(config:SquareConfig){
+    console.log(config);
+}
+
+createSquare({color"red"});//传入可选参数
+createSquare({color:"red", sdf:"hello"}); //传入额外参数
+```
+#### 5.4 接口函数类型
+```ts
+interface SearchFunc{
+    (source:string, substring:string):void;
+}
+
+let mySearch:SearchFunc;
+
+mySearch = function(source:string, substring:string){
+    console.log(source, substring);
+}
+
+```
+#### 5.5 接口类类型
+```ts
+interface UserInterface{
+    job:string;
+    sayHello(greeting:string):void;
+}
+
+class Teacher implements UserInterface{
+    public job:string;
+    public name:string;
+    public age:number;
+
+    sayHello(greeting:string){
+        console.log(greeting);
+    }
+}
+
+const t = new Teacher("teacher", "zhangsan". 20);
+```
+
+#### 5.6 interface implementation
+```ts
+interface Info{
+    name:string;
+    age:number;
+}
+
+interface Job extends Info{
+    job:string;
+}
+
+function user(userInfo:Job){
+    console.log(userInfo);
+}
+
+user({
+    name:"zhangsan",
+    age:20,
+    job:"teacher"
+})
+
+```
+### 6.泛型Generics
+```ts
+function createArray(length:number, value:T):Array<T>{
+    let result:T[] = [];
+    for(let i = 0; i< length;i++){
+        result[i] = value;
+    }
+    return result;
+}
+
+const arr = createArray(3,"X");
+console.log(arr);
+```
+由于泛型类型未指定，不能操作类型的方法。
+可以使用继承约束泛型的类型，就可以使用对应的类型方法。
+
+### 7.声明合并
+```ts
+interface Alarm{
+    price:number;
+}
+
+interface Alarm{
+    price:number;
+    name:string;
+}
+//以上完成声明的合并
+//同样，class也可以完成声明的合并
+```
+
+### 8.namespace
+使用namepace分隔文件，可以在不同namespace之间进行调用。
+```ts
+namespace Animal{
+    export interface Animal{
+
+    }
+}
+```
+
+```ts
+namespace AnimalInfo{
+    export class Cat implements Animal{
+
+    }
+}
+```
+可以分别编译这些文件，也可以将这些文件编译成一个js文件，引入之后就可以使用。
+
+### 9.module
+模块在其自身的作用域里执行，不是全局运行，达到隔离的效果。
+使用export导出功能，使用import引入功能。
+Animal.ts
+```ts
+export interface Animal{
+
+}
+```
+Cat.ts
+```ts
+import {Animal} from "./Animal.ts"
+
+class Cat implements Animal{
+
+}
+```
+Dog.ts
+```ts
+import {Animal} from "./Animal.ts"
+
+class Dog implements Animal{
+
+}
+```
+模块方式是支持工程化的基础。
+
+
+### 10. 声明文件 
+引用第三方文件的时候，需要引入，保证第三方库的功能。.d.ts结尾的文件。
+如果自己内部使用的库需要引入，也需要编写自定义的声明文件。
+
+### 11.tsconfig.json
+这是ts的配置文件，当一个目录中有这个文件的时候，就认为这是ts的根目录。
+
+
+
+
+
 
 
 
